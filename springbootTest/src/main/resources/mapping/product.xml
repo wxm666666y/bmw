@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bimowu.springboot.dao.ProductDao">
+
+	<resultMap id="Product" type="com.bimowu.springboot.model.Product" >
+		<result column="name" property="name"/>
+		<result column="price" property="price"/>
+		<result column="state" property="state"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="desc" property="desc"/>
+		<result column="product_id" property="productId"/>
+		<result column="start_show_time" property="startShowTime"/>
+		<result column="img_url" property="imgUrl"/>
+	</resultMap>
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		id,
+		name,
+		price,
+		state,
+		create_time,
+		update_time,
+		`desc`,
+		product_id,
+		start_show_time,
+		img_url
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultMap="Product" parameterType="java.lang.Long">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM product
+		 WHERE id = #{id}
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		 DELETE FROM product
+		 WHERE id = #{id}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.bimowu.springboot.model.Product" >
+		 INSERT INTO product
+ 		(
+			 id,
+			 name,
+			 price,
+			 state,
+			 create_time,
+			 update_time,
+			 `desc`,
+			 product_id,
+			 start_show_time,
+			 img_url
+		) 
+		 VALUES 
+ 		(
+			 #{id},
+			 #{name},
+			 #{price},
+			 #{state},
+			 #{createTime},
+			 #{updateTime},
+			 #{desc},
+			 #{productId},
+			 #{startShowTime},
+			 #{imgUrl}
+ 		) 
+		 <selectKey keyProperty="id" resultType="Long" order="AFTER">
+			 select LAST_INSERT_ID()
+		 </selectKey>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.bimowu.springboot.model.Product" >
+		 UPDATE product
+ 		 <set> 
+			<if test="name != null and name != ''">
+				 name = #{name},
+			</if>
+			<if test="price != null">
+				 price = #{price},
+			</if>
+			<if test="state != null">
+				 state = #{state},
+			</if>
+			<if test="createTime != null">
+				 create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				 update_time = #{updateTime},
+			</if>
+			<if test="desc != null and desc != ''">
+				 `desc` = #{desc},
+			</if>
+			<if test="productId != null">
+				 product_id = #{productId},
+			</if>
+			<if test="startShowTime != null">
+				 start_show_time = #{startShowTime},
+			</if>
+			<if test="imgUrl != null and imgUrl != ''">
+				 img_url = #{imgUrl},
+			</if>
+
+ 		 </set>
+		 WHERE id = #{id}
+	</update>
+
+	<!-- list4Page 分页查询-->
+	<select id="list4Page" resultMap="Product">
+		 SELECT 
+		 <include refid="Base_Column_List" />
+		 from product
+ 		 where 1=1  
+		<if test="record.id != null">
+			 and id = #{record.id} 
+		</if>
+		<if test="record.name != null and record.name != ''">
+			 and name = #{record.name} 
+		</if>
+		<if test="record.price != null">
+			 and price = #{record.price} 
+		</if>
+		<if test="record.state != null">
+			 and state = #{record.state} 
+		</if>
+		<if test="record.createTime != null">
+			 and create_time = #{record.createTime} 
+		</if>
+		<if test="record.updateTime != null">
+			 and update_time = #{record.updateTime} 
+		</if>
+		<if test="record.desc != null and record.desc != ''">
+			 and `desc` = #{record.desc}
+		</if>
+		<if test="record.productId != null">
+			 and product_id = #{record.productId} 
+		</if>
+		<if test="record.startShowTime != null">
+			 and start_show_time = #{record.startShowTime} 
+		</if>
+		<if test="record.imgUrl != null and record.imgUrl != ''">
+			 and img_url = #{record.imgUrl} 
+		</if>
+		<if test="commonQueryParam != null">
+			<if test="commonQueryParam.order != null ">
+				 order by #{commonQueryParam.order}			<if test="commonQueryParam.sort != null ">				 #{commonQueryParam.sort}			</if>
+			</if>
+			<if test="commonQueryParam.start != null  and commonQueryParam.pageSize != null">
+				 limit #{commonQueryParam.start}, #{commonQueryParam.pageSize}
+			</if>
+		</if>
+	</select>
+	<!-- count 总数-->
+	<select id="count" resultType="long">
+		 SELECT 
+		 count(1) 
+		 from product
+ 		 where 1=1  
+		<if test="id != null">
+			 and id = #{id} 
+		</if>
+		<if test="name != null and name != ''">
+			 and name = #{name} 
+		</if>
+		<if test="price != null">
+			 and price = #{price} 
+		</if>
+		<if test="state != null">
+			 and state = #{state} 
+		</if>
+		<if test="createTime != null">
+			 and create_time = #{createTime} 
+		</if>
+		<if test="updateTime != null">
+			 and update_time = #{updateTime} 
+		</if>
+		<if test="desc != null and desc != ''">
+			 and `desc` = #{desc}
+		</if>
+		<if test="productId != null">
+			 and product_id = #{productId} 
+		</if>
+		<if test="startShowTime != null">
+			 and start_show_time = #{startShowTime} 
+		</if>
+		<if test="imgUrl != null and imgUrl != ''">
+			 and img_url = #{imgUrl} 
+		</if>
+	</select>
+	<!-- list 查询-->
+	<select id="list" resultMap="Product">
+		 SELECT 
+		 <include refid="Base_Column_List" />
+		 from product
+ 		 where 1=1  
+		<if test="id != null">
+			 and id = #{id} 
+		</if>
+		<if test="name != null and name != ''">
+			 and name = #{name} 
+		</if>
+		<if test="price != null">
+			 and price = #{price} 
+		</if>
+		<if test="state != null">
+			 and state = #{state} 
+		</if>
+		<if test="createTime != null">
+			 and create_time = #{createTime} 
+		</if>
+		<if test="updateTime != null">
+			 and update_time = #{updateTime} 
+		</if>
+		<if test="desc != null and desc != ''">
+			 and `desc` = #{desc}
+		</if>
+		<if test="productId != null">
+			 and product_id = #{productId} 
+		</if>
+		<if test="startShowTime != null">
+			 and start_show_time = #{startShowTime} 
+		</if>
+		<if test="imgUrl != null and imgUrl != ''">
+			 and img_url = #{imgUrl} 
+		</if>
+	</select>
+
+	<select id="listByOrderNo"  resultMap="Product">
+		select p.* from product p, `order` o where p.product_id= o.product_id
+											   and o.order_no=#{orderNo}
+	</select>
+</mapper>

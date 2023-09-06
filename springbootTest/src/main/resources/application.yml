@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+#logging:
+#  config: classpath:log4j2.xml
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/bmw_ssm?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false
+    username: root
+    password: wxm147369
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  mvc:
+    view:
+      prefix: /WEB-INF/view/
+      suffix: .jsp
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.bimowu.springboot.model
+
+http:
+  maxTotal: 300
+  defaultMaxPerRoute: 50
+  connectTimeout: 1000
+  connectionRequestTimeout: 500
+  socketTimeout: 5000
+  staleConnectionCheckEnabled: true
