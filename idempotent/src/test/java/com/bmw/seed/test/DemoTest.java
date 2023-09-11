@@ -1,4 +1,4 @@
-package com.bmw.search.test;
+package com.bmw.seed.test;
 
 import com.bmw.seed.SeedApplication;
 import com.bmw.seed.service.DemoService;

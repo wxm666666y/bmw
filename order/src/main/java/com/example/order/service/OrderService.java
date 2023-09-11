@@ -13,7 +13,16 @@ public interface OrderService {
 
     int updateOrder( Order order );
 
-    int deleteById( @Param("id") Long id );
+    int deleteById(Long id );
 
     void startTicketTimeoutTask();
+
+    boolean insertOrderRedis( Order order );
+
+    boolean updateOrderRedis( Order order );
+
+    void deleteByIdRedis(Long id );
+
+
+
 }

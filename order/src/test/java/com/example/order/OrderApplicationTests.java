@@ -32,4 +32,13 @@ class OrderApplicationTests {
         orderService.updateOrder(order);
     }
 
+    @Test
+    void contextLoadsRedis() {
+        Order order = orderService.selectById(7L);
+//        order.setState(1);
+//        System.out.println(orderService.insertOrderRedis(order));
+//        System.out.println(orderService.updateOrderRedis(order));
+        orderService.deleteByIdRedis(order.getId());
+    }
+
 }

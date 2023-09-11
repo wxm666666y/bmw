@@ -3,6 +3,7 @@ package com.example.order.service.Impl;
 import com.example.order.dao.OrderDao;
 import com.example.order.pojo.Order;
 import com.example.order.service.OrderService;
+import com.example.order.utils.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,10 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     private static final Logger LOG = LoggerFactory.getLogger(OrderServiceImpl.class);
+    public static final String ORDERID = "orderId:";
+
+    @Autowired
+    RedisUtil redisUtil;
 
     @Autowired
     OrderDao orderDao;
@@ -68,4 +73,26 @@ public class OrderServiceImpl implements OrderService {
             }
         }
     }
+
+    @Override
+    public boolean insertOrderRedis(Order order) {
+        Long id = order.getId();
+        String orderId = ORDERID + id;
+        return redisUtil.set(orderId, order);
+    }
+
+    @Override
+    public boolean updateOrderRedis(Order order) {
+        Long id = order.getId();
+        String orderId = ORDERID + id;
+        return redisUtil.set(orderId, order);
+    }
+
+    @Override
+    public void deleteByIdRedis(Long id) {
+        String orderId = ORDERID + id;
+        redisUtil.del(orderId);
+    }
+
+
 }
