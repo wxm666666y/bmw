@@ -51,7 +51,7 @@ public class OrderServiceImpl implements OrderService {
         return orderDao.deleteById(id);
     }
 
-    @Scheduled(fixedRate = 6000) // 每6秒执行一次
+//    @Scheduled(fixedRate = 6000) // 每6秒执行一次
     @Override
     public void startTicketTimeoutTask() {
         LOG.info("===检测超时订单===");

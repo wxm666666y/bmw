@@ -427,11 +427,11 @@ public class EntityUtil {
                 mapperXmlFile)));
         bw.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         bw.newLine();
-        bw.write("<!DOCTYPE com.bmw.mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" ");
+        bw.write("<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" ");
         bw.newLine();
         bw.write("    \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">");
         bw.newLine();
-        bw.write("<com.bmw.mapper namespace=\"" + dao_package + "." + mapperName + "Dao\">");
+        bw.write("<mapper namespace=\"" + dao_package + "." + mapperName + "Dao\">");
         bw.newLine();
         bw.newLine();
 
@@ -454,7 +454,7 @@ public class EntityUtil {
         // this.outputSqlMapperMethod(bw, columns, types);
         buildSQL(bw, columns, types);
 
-        bw.write("</com.bmw.mapper>");
+        bw.write("</mapper>");
         bw.flush();
         bw.close();
     }
